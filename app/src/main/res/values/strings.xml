@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">MoviesDiscovery</string>
+    <!-- Settings Menu Item [CHAR LIMIT=NONE] -->
+    <string name="settings_menu_item">Settings</string>
+    <!-- Settings Activity Title [CHAR LIMIT=NONE] -->
+    <string name="settings_title">Movies Settings</string>
+
+    <!-- Strings For Order-By Preference [CHAR LIMIT=30] -->
+    <string name="settings_order_by_label">Order By</string>
+    <string name="settings_order_by_key" translatable="false">sort_by</string>
+    <string name="settings_order_by_default" translatable="false">@string/settings_order_by_popularity_value</string>
+
+    <!-- Label for popularity-->
+    <string name="settings_order_by_popularity_label">Most popular</string>
+    <string name="settings_order_by_popularity_value" translatable="false">popular</string>
+
+    <!-- Label for ratings -->
+    <string name="settings_order_by_ratings_label">Best ratings</string>
+    <string name="settings_order_by_ratings_value" translatable="false">top_rated</string>
 </resources>
