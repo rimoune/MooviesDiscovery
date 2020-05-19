@@ -31,9 +31,14 @@ public class ActivityDetail extends AppCompatActivity {
     //    private TextView mtitle;
     private Movie mmovie;
 
-    private RecyclerView mRecyclerView;
+    private RecyclerView mReviewRecyclerView;
 
     private ReviewAdapter mReviewAdapter;
+
+
+    private RecyclerView mTrailerRecyclerView;
+
+    private TrailerAdapter mTrailerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,15 +79,26 @@ public class ActivityDetail extends AppCompatActivity {
             Log.v("**onCreateID", String.valueOf(mmovie.getId()));
 
 
-            mRecyclerView = (RecyclerView) findViewById(R.id.rv_reviews);
-            LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+            mReviewRecyclerView = (RecyclerView) findViewById(R.id.rv_reviews);
+            LinearLayoutManager reviewmanager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
-            mRecyclerView.setLayoutManager(manager);
-            mRecyclerView.setHasFixedSize(true);
+            mReviewRecyclerView.setLayoutManager(reviewmanager);
+            mReviewRecyclerView.setHasFixedSize(true);
 
             mReviewAdapter = new ReviewAdapter();
 
-            mRecyclerView.setAdapter(mReviewAdapter);
+            mReviewRecyclerView.setAdapter(mReviewAdapter);
+
+            //Trailer
+            mTrailerRecyclerView = (RecyclerView) findViewById(R.id.rv_trailers);
+            LinearLayoutManager trailermanager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+
+            mTrailerRecyclerView.setLayoutManager(trailermanager);
+            mTrailerRecyclerView.setHasFixedSize(true);
+
+            mTrailerAdapter = new TrailerAdapter();
+
+            mTrailerRecyclerView.setAdapter(mTrailerAdapter);
 
 
             makeNetworkConnectionReview();
@@ -183,6 +199,8 @@ public class ActivityDetail extends AppCompatActivity {
                     Log.v("**onResponse, Trailer",trailer.getName()+ "\n\n");
 
                 }
+                mTrailerAdapter.setTrailerData(trailers);
+
 
 
             }
