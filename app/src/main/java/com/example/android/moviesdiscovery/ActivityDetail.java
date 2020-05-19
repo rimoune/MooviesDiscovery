@@ -1,7 +1,9 @@
 package com.example.android.moviesdiscovery;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -25,11 +27,12 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ActivityDetail extends AppCompatActivity {
+public class ActivityDetail extends AppCompatActivity implements TrailerAdapter.TrailerAdapterOnClickHandler{
 
 
     //    private TextView mtitle;
     private Movie mmovie;
+
 
     private RecyclerView mReviewRecyclerView;
 
@@ -96,7 +99,7 @@ public class ActivityDetail extends AppCompatActivity {
             mTrailerRecyclerView.setLayoutManager(trailermanager);
             mTrailerRecyclerView.setHasFixedSize(true);
 
-            mTrailerAdapter = new TrailerAdapter();
+            mTrailerAdapter = new TrailerAdapter(this);
 
             mTrailerRecyclerView.setAdapter(mTrailerAdapter);
 
@@ -214,6 +217,16 @@ public class ActivityDetail extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onClick(Trailer trailer) {
+        Context context = this;
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Uri file =Uri.parse("https://www.youtube.com/watch?v="+trailer.getKey());
+        intent.setData(file);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
 }
 
 

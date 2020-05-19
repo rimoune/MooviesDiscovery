@@ -21,10 +21,17 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
 
     //    private String mPosterPath;
     private List<Trailer> mTrailer;
+    private final TrailerAdapterOnClickHandler mClickHandler;
 
-    public TrailerAdapter() {
+    public TrailerAdapter(TrailerAdapterOnClickHandler clickHandler) {
+        mClickHandler = clickHandler;
+
     }
 
+
+    public interface TrailerAdapterOnClickHandler {
+        void onClick(Trailer trailer);
+    }
 
     public void setTrailerData(List<Trailer> trailer) {
 
@@ -62,7 +69,7 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
     }
 
 
-    class TrailerViewHolder extends RecyclerView.ViewHolder{
+    class TrailerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView mName;
 
         //costruttore
@@ -72,6 +79,8 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
             super(itemView);
             Log.v("**costruttore vh: ", itemView.toString());
             mName=(TextView)itemView.findViewById(R.id.tv_trailer_name);
+            itemView.setOnClickListener(this);
+
 
         }
 
@@ -81,6 +90,14 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
         }
 
 
+        @Override
+        public void onClick(View v) {
+
+            int adapterPosition = getAdapterPosition();
+            Trailer trailer = mTrailer.get(adapterPosition);
+            mClickHandler.onClick(trailer);
+
+        }
     }
 
 
