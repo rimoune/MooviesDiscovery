@@ -17,4 +17,6 @@
     <!-- Label for ratings -->
     <string name="settings_order_by_ratings_label">Best ratings</string>
     <string name="settings_order_by_ratings_value" translatable="false">top_rated</string>
+    <string name="settings_order_by_favourites_value">Favourites</string>
+    <string name="settings_order_by_favourites_label">Favourites</string>
 </resources>

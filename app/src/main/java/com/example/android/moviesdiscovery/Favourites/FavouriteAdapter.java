@@ -1,6 +1,7 @@
 package com.example.android.moviesdiscovery.Favourites;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,9 +63,9 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Favo
 
         private FavouriteViewHolder(View itemView) {
             super(itemView);
-            titleItemView = itemView.findViewById(R.id.tv_title);
-            posterPathItemView = itemView.findViewById(R.id.tv_poster_path);
-            releaseDateItemView = itemView.findViewById(R.id.tv_releaseDate);
+            titleItemView = (TextView) itemView.findViewById(R.id.tv_title);
+            posterPathItemView = (TextView) itemView.findViewById(R.id.tv_poster_path);
+            releaseDateItemView = (TextView) itemView.findViewById(R.id.tv_release);
         }
 
     }
