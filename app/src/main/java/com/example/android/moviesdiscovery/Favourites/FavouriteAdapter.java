@@ -5,12 +5,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.moviesdiscovery.LocalDB.Favourite;
 import com.example.android.moviesdiscovery.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -18,6 +20,7 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Favo
 
     private final LayoutInflater mInflater;
     private List<Favourite> mFavourite; // Cached copy of words
+
 
     public FavouriteAdapter(Context context) { mInflater = LayoutInflater.from(context); }
 
@@ -33,12 +36,14 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Favo
             Favourite current = mFavourite.get(position);
             holder.titleItemView.setText(current.getTitle());
             holder.releaseDateItemView.setText(current.getReleaseDate());
-            holder.posterPathItemView.setText(current.getPosterPath());
+//            holder.posterPathItemView.setText(current.getPosterPath());
+
+            holder.bind("http://image.tmdb.org/t/p/w342/" +current.getPosterPath());
         } else {
+
             // Covers the case of data not being ready yet.
             holder.titleItemView.setText("No favourite yet");
             holder.releaseDateItemView.setText("No favourite yet");
-            holder.posterPathItemView.setText("No favourite yet");
         }
     }
 
@@ -58,14 +63,20 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Favo
 
     class FavouriteViewHolder extends RecyclerView.ViewHolder {
         private final TextView titleItemView;
-        private final TextView posterPathItemView;
+        private ImageView posterPathItemView;
         private final TextView releaseDateItemView;
 
         private FavouriteViewHolder(View itemView) {
             super(itemView);
             titleItemView = (TextView) itemView.findViewById(R.id.tv_title);
-            posterPathItemView = (TextView) itemView.findViewById(R.id.tv_poster_path);
+            posterPathItemView = (ImageView) itemView.findViewById(R.id.iv_poster_path);
             releaseDateItemView = (TextView) itemView.findViewById(R.id.tv_release);
+        }
+
+        public void bind(String poster_path) {
+//            Log.v("**bind: ", poster_path);
+
+            Picasso.get().load(poster_path).into(posterPathItemView);
         }
 
     }
