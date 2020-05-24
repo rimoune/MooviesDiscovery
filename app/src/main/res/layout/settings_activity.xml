@@ -1,5 +1,5 @@
 <fragment
-    android:name="com.example.android.moviesdiscovery.SettingsFragment"
+    android:name="com.example.android.moviesdiscovery.Settings.SettingsFragment"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/settings"

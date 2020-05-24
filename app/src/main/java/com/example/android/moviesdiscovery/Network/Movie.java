@@ -1,4 +1,4 @@
-package com.example.android.moviesdiscovery;
+package com.example.android.moviesdiscovery.Network;
 
 
 import java.io.Serializable;

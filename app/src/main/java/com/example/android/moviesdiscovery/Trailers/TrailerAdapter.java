@@ -1,4 +1,4 @@
-package com.example.android.moviesdiscovery;
+package com.example.android.moviesdiscovery.Trailers;
 
 
 import android.content.Context;
@@ -6,15 +6,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
+import com.example.android.moviesdiscovery.Network.Trailer;
+import com.example.android.moviesdiscovery.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerViewHolder> {

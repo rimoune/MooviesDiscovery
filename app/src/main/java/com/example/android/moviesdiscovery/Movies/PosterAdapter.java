@@ -1,4 +1,4 @@
-package com.example.android.moviesdiscovery;
+package com.example.android.moviesdiscovery.Movies;
 
 import android.content.Context;
 import android.util.Log;
@@ -10,9 +10,10 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.android.moviesdiscovery.Network.Movie;
+import com.example.android.moviesdiscovery.R;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterViewHolder> {

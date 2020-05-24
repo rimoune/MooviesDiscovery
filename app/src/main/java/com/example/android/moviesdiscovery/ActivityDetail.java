@@ -6,15 +6,26 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.android.moviesdiscovery.LocalDB.Favourite;
+import com.example.android.moviesdiscovery.LocalDB.FavouriteViewModel;
+import com.example.android.moviesdiscovery.Network.Movie;
+import com.example.android.moviesdiscovery.Network.ResultReview;
+import com.example.android.moviesdiscovery.Network.Review;
+import com.example.android.moviesdiscovery.Network.TMDBRESTApi;
+import com.example.android.moviesdiscovery.Reviews.ReviewAdapter;
+import com.example.android.moviesdiscovery.Network.ResultTrailer;
+import com.example.android.moviesdiscovery.Network.Trailer;
+import com.example.android.moviesdiscovery.Trailers.TrailerAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -26,6 +37,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
 
 public class ActivityDetail extends AppCompatActivity implements TrailerAdapter.TrailerAdapterOnClickHandler{
 
@@ -43,6 +55,11 @@ public class ActivityDetail extends AppCompatActivity implements TrailerAdapter.
 
     private TrailerAdapter mTrailerAdapter;
 
+    private FloatingActionButton fab;
+
+    private FavouriteViewModel mFavouriteViewModel;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +71,11 @@ public class ActivityDetail extends AppCompatActivity implements TrailerAdapter.
 
         if (intentThatStartedThisActivity != null) {
 
+            mFavouriteViewModel = ViewModelProviders.of(this).get(FavouriteViewModel.class);
+
             mmovie = (Movie) getIntent().getSerializableExtra("serializable");
+
+            Favourite favourite=new Favourite(mmovie.getId(),mmovie.getPosterPath(),mmovie.getTitle(),mmovie.getReleaseDate());
 
             String title= mmovie.getTitle();
             mtitle.setText(title);
@@ -81,6 +102,17 @@ public class ActivityDetail extends AppCompatActivity implements TrailerAdapter.
 
             Log.v("**onCreateID", String.valueOf(mmovie.getId()));
 
+
+            fab = (FloatingActionButton) findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Log.v("**FAB", "Add the movie to favourites!");
+
+                    mFavouriteViewModel.insert(favourite);
+                }
+            });
 
             mReviewRecyclerView = (RecyclerView) findViewById(R.id.rv_reviews);
             LinearLayoutManager reviewmanager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);

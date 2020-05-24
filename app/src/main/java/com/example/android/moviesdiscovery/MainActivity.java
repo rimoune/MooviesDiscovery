@@ -12,9 +12,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 
-import java.io.Serializable;
+import com.example.android.moviesdiscovery.Network.Movie;
+import com.example.android.moviesdiscovery.Movies.PosterAdapter;
+import com.example.android.moviesdiscovery.Network.Result;
+import com.example.android.moviesdiscovery.Network.TMDBRESTApi;
+
 import java.util.List;
 
 import okhttp3.OkHttpClient;
