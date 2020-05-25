@@ -63,6 +63,7 @@ public class ActivityDetail extends AppCompatActivity implements TrailerAdapter.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_detail);
         setContentView(R.layout.activity_detail);
 
         TextView mtitle = (TextView) findViewById(R.id.tv_detail_title);
@@ -166,7 +167,6 @@ public class ActivityDetail extends AppCompatActivity implements TrailerAdapter.
                 .build();
 
         TMDBRESTApi dummyRestApiExample = retrofit.create(TMDBRESTApi.class);
-//        Call<Movie> call = dummyRestApiExample.getPopular("1cf6722020fb5ceac020f7c2adb96500");
             Call<ResultReview> call;
 
             call = dummyRestApiExample.getReviews( mmovie.getId(),"1cf6722020fb5ceac020f7c2adb96500");
