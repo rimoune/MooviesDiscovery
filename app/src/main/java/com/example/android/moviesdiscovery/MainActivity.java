@@ -1,14 +1,19 @@
 package com.example.android.moviesdiscovery;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.os.PersistableBundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +33,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static java.lang.StrictMath.ceil;
+
 public class MainActivity extends AppCompatActivity implements PosterAdapter.MoviesAdapterOnClickHandler, SharedPreferences.OnSharedPreferenceChangeListener {
 
 
@@ -37,6 +44,13 @@ public class MainActivity extends AppCompatActivity implements PosterAdapter.Mov
 
     private String mOrderBy;
 
+    private Parcelable savedRecyclerLayoutState;
+
+    private GridLayoutManager manager;
+
+    private static final String BUNDLE_RECYCLER_LAYOUT = "recycler_layout";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +59,8 @@ public class MainActivity extends AppCompatActivity implements PosterAdapter.Mov
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_poster);
-        GridLayoutManager manager = new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
+        int span =calculateNoOfColumns(this);
+        manager = new GridLayoutManager(this, span, GridLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setHasFixedSize(true);
 
@@ -120,7 +135,12 @@ public class MainActivity extends AppCompatActivity implements PosterAdapter.Mov
                 }
                 Log.v("**onResponse>", response.message());
                 List<Movie> movies = response.body().getMovies();
+                if(savedRecyclerLayoutState!=null){
+                    manager.onRestoreInstanceState(savedRecyclerLayoutState);
+
+                }
                 mPosterAdapter.setPosterData(movies);
+
 
             }
 
@@ -167,6 +187,33 @@ public class MainActivity extends AppCompatActivity implements PosterAdapter.Mov
                     getString(R.string.settings_order_by_default));
             Log.v("**onSharedChanged",mOrderBy);
             makeNetworkConnection();
+        }
+    }
+
+    // Helper method to calculate the best amount of columns to be displayed on a device
+    public static int calculateNoOfColumns(Context context) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        int scalingFactor = 180;
+        int noOfColumns = (int) ceil (dpWidth / scalingFactor);
+        return noOfColumns;
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(BUNDLE_RECYCLER_LAYOUT,
+                manager.onSaveInstanceState());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        //restore recycler view at same position
+        if (savedInstanceState != null) {
+            savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT);
         }
     }
 }

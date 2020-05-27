@@ -38,7 +38,7 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Favo
             holder.releaseDateItemView.setText(current.getReleaseDate());
 //            holder.posterPathItemView.setText(current.getPosterPath());
 
-            holder.bind("http://image.tmdb.org/t/p/w342/" +current.getPosterPath());
+            holder.bind("https://image.tmdb.org/t/p/w342/" +current.getPosterPath());
         } else {
 
             // Covers the case of data not being ready yet.

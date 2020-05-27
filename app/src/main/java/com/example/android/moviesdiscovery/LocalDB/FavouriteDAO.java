@@ -13,9 +13,11 @@ public interface FavouriteDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Favourite favourite);
-    @Query("DELETE from favourite_table where id=:favourite")
-    void delete (String favourite);
+    @Query("DELETE from favourite_table where id=:id")
+    void delete (Integer id);
     @Query("SELECT * from favourite_table")
     LiveData<List<Favourite>> getAllFavourite();
+    @Query("SELECT * FROM favourite_table WHERE id = :id")
+    Favourite loadMovieById(Integer id);
 }
 

@@ -62,7 +62,7 @@ public class PosterAdapter extends RecyclerView.Adapter<PosterAdapter.PosterView
     @Override
     public void onBindViewHolder(@NonNull PosterViewHolder holder, int position) {
         Log.v("**onBindViewHolder", mMovie.get(position).getPosterPath());
-        holder.bind("http://image.tmdb.org/t/p/w342/" + mMovie.get(position).getPosterPath());
+        holder.bind("https://image.tmdb.org/t/p/w342/" + mMovie.get(position).getPosterPath());
 
 
     }

@@ -1,24 +1,38 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:visibility="visible"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/iv_poster_path">
+        android:id="@+id/iv_poster_path"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_background" >
     </ImageView>
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_title">
-    </TextView>
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/tv_title"
+    android:textSize="@dimen/text_size"
+    app:layout_constraintStart_toEndOf="@+id/iv_poster_path"
+    app:layout_constraintTop_toTopOf="parent">
+</TextView>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_release">
-    </TextView>
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/tv_release"
+    android:textSize="@dimen/text_size"
+    app:layout_constraintStart_toEndOf="@+id/iv_poster_path"
+    app:layout_constraintTop_toBottomOf="@+id/tv_title">
+</TextView>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

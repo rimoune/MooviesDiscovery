@@ -23,5 +23,8 @@ public class FavouriteViewModel extends AndroidViewModel {
 
     public void insert(Favourite favourite) { mRepository.insert(favourite); }
 
+    public void deleteFavourite(Integer id) {mRepository.deleteFavourite(id);}
+
+
 
 }

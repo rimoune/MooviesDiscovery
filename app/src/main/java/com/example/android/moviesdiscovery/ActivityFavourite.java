@@ -23,10 +23,6 @@ public class ActivityFavourite extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favourite);
-
-
-
-
         RecyclerView recyclerView = findViewById(R.id.favourite_rv);
         final FavouriteAdapter adapter = new FavouriteAdapter(this);
         recyclerView.setAdapter(adapter);
