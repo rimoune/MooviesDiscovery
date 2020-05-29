@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -58,6 +60,14 @@ public class ActivityDetail extends AppCompatActivity implements TrailerAdapter.
     private FloatingActionButton fab;
 
     private FavouriteViewModel mFavouriteViewModel;
+
+    private Parcelable savedRecyclerLayoutStatereview;
+    private Parcelable savedRecyclerLayoutStatetrailer;
+
+    private LinearLayoutManager reviewmanager;
+    private LinearLayoutManager trailermanager;
+    private static final String BUNDLE_RECYCLER_LAYOUT_REVIEW = "recycler_review";
+    private static final String BUNDLE_RECYCLER_LAYOUT_TRAILER = "recycler_trailer";
 
 
     @Override
@@ -116,7 +126,7 @@ public class ActivityDetail extends AppCompatActivity implements TrailerAdapter.
             });
 
             mReviewRecyclerView = (RecyclerView) findViewById(R.id.rv_reviews);
-            LinearLayoutManager reviewmanager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+            reviewmanager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
             mReviewRecyclerView.setLayoutManager(reviewmanager);
             mReviewRecyclerView.setHasFixedSize(true);
@@ -127,7 +137,7 @@ public class ActivityDetail extends AppCompatActivity implements TrailerAdapter.
 
             //Trailer
             mTrailerRecyclerView = (RecyclerView) findViewById(R.id.rv_trailers);
-            LinearLayoutManager trailermanager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+            trailermanager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
             mTrailerRecyclerView.setLayoutManager(trailermanager);
             mTrailerRecyclerView.setHasFixedSize(true);
@@ -184,6 +194,11 @@ public class ActivityDetail extends AppCompatActivity implements TrailerAdapter.
                         Log.v("**onResponse, Review",review.getContent()+ "\n\n");
 
                     }
+                    if(savedRecyclerLayoutStatereview instanceof Parcelable){
+                        Log.v("**saved..", String.valueOf(savedRecyclerLayoutStatereview.describeContents()));
+                        reviewmanager.onRestoreInstanceState(savedRecyclerLayoutStatereview);
+
+                    }
                     mReviewAdapter.setReviewData(reviews);
 
 
@@ -234,6 +249,10 @@ public class ActivityDetail extends AppCompatActivity implements TrailerAdapter.
                     Log.v("**onResponse, Trailer",trailer.getName()+ "\n\n");
 
                 }
+                if(savedRecyclerLayoutStatetrailer!=null){
+                    trailermanager.onRestoreInstanceState(savedRecyclerLayoutStatetrailer);
+
+                }
                 mTrailerAdapter.setTrailerData(trailers);
 
 
@@ -259,8 +278,32 @@ public class ActivityDetail extends AppCompatActivity implements TrailerAdapter.
             startActivity(intent);
         }
     }
-}
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(BUNDLE_RECYCLER_LAYOUT_REVIEW,
+                reviewmanager.onSaveInstanceState());
+        Log.v("**onSave..1",outState.toString());
+        outState.putParcelable(BUNDLE_RECYCLER_LAYOUT_TRAILER,
+                trailermanager.onSaveInstanceState());
+        Log.v("**onSave..2",outState.toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.v("**onRestore..0",savedInstanceState.toString());
+
+        //restore recycler view at same position
+        if (savedInstanceState != null) {
+            savedRecyclerLayoutStatetrailer = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT_TRAILER);
+            Log.v("**onRestore..1",savedRecyclerLayoutStatetrailer.toString());
+            savedRecyclerLayoutStatereview = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT_REVIEW);
+            Log.v("**onRestore..2",savedRecyclerLayoutStatereview.toString());
+        }
+    }
+}
 
 
 
